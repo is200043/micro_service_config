@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,23 @@ public class SaleOrderController {
     @GetMapping("/setPromotion/{id}/{promotionCode}")
     public Map<String, Object> findOrderById(@PathVariable Long id, @PathVariable String promotionCode) {
         LOGGER.info("call to promotion service");
-        Map<String, String> promotion = restTemplate.getForObject("http://promotion-service/promotion/" + promotionCode, Map.class);
+        Map<String, Object> promotion = restTemplate.getForObject("http://promotion-service/promotion/" + promotionCode, Map.class);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        result.put("promotion", promotionCode);
-        Double subnet = new Double(330);
-        result.put("subnet", subnet);
-        Double discount = new Double(promotion.get("discount"));
-        result.put("discount", discount);
-        result.put("net", subnet - discount);
-        LOGGER.info("response from promotion");
+        if (promotion != null && ((Boolean) promotion.get("valid"))) {
+            result.put("id", id);
+            result.put("promotion", promotionCode);
+            LOGGER.info("subnet ");
+            Integer subnet = 330;
+            result.put("subnet", subnet);
+            LOGGER.info("discount " + promotion.get("discount"));
+            Double discount = (Double) promotion.get("discount");
+            result.put("discount", discount);
+            result.put("net", (subnet - discount));
+            LOGGER.info("response from promotion");
+        } else {
+            new Throwable("Promotion Code not found");
+        }
         return result;
     }
 
