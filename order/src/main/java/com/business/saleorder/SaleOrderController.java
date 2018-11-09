@@ -33,15 +33,24 @@ public class SaleOrderController {
 
     @HystrixCommand(fallbackMethod = "getPromotionFallback")
     @GetMapping("/setPromotion/{id}/{promotionCode}")
-    public Map<String, String> findOrderById(@PathVariable Long id, @PathVariable String promotionCode) {
+    public Map<String, Object> findOrderById(@PathVariable Long id, @PathVariable String promotionCode) {
         LOGGER.info("call to promotion service");
         Map<String, String> promotion = restTemplate.getForObject("http://promotion-service/promotion/" + promotionCode, Map.class);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("promotion", promotionCode);
+        Double subnet = new Double(330);
+        result.put("subnet", subnet);
+        Double discount = new Double(promotion.get("discount"));
+        result.put("discount", discount);
+        result.put("net", subnet - discount);
         LOGGER.info("response from promotion");
-        return promotion;
+        return result;
     }
 
-    public Map<String, String> getPromotionFallback(Long id, String promotionCode, Throwable hystrixCommand) {
-        Map<String, String> result = new HashMap<>();
+    public Map<String, Object> getPromotionFallback(Long id, String promotionCode, Throwable hystrixCommand) {
+        Map<String, Object> result = new HashMap<>();
         LOGGER.info("" + hystrixCommand.getMessage());
         result.put("success", "false");
         result.put("message", hystrixCommand.getMessage());
