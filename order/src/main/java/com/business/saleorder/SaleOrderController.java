@@ -42,10 +42,8 @@ public class SaleOrderController {
         if (promotion != null && ((Boolean) promotion.get("valid"))) {
             result.put("id", id);
             result.put("promotion", promotionCode);
-            LOGGER.info("subnet ");
             Integer subnet = 330;
             result.put("subnet", subnet);
-            LOGGER.info("discount " + promotion.get("discount"));
             Double discount = (Double) promotion.get("discount");
             result.put("discount", discount);
             result.put("net", (subnet - discount));
