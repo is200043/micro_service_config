@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.business.order.item;
+package com.business.item;
 
+import com.business.saleorder.SaleOrder;
+import com.business.product.Product;
 import java.util.Set;
 import javax.persistence.*;
 

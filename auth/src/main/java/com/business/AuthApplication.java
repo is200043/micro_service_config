@@ -1,7 +1,7 @@
-package com.business.auth;
+package com.business;
 
-import com.business.auth.user.User;
-import com.business.auth.user.UserRepository;
+import com.business.user.User;
+import com.business.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

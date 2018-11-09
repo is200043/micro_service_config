@@ -1,8 +1,8 @@
-package com.business.auth.security;
+package com.business.security;
 
 import java.util.List;
 
-import com.business.auth.user.UserRepository;
+import com.business.user.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		com.business.auth.user.User appUser = userRepository.findByEmail(username);
+		com.business.user.User appUser = userRepository.findByEmail(username);
 		if(appUser != null){
 			List<GrantedAuthority> grantedAuthorities = AuthorityUtils
 								.commaSeparatedStringToAuthorityList("ROLE_" + appUser.getRole());

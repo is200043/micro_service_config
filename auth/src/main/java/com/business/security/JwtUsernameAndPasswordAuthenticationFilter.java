@@ -1,4 +1,4 @@
-package com.business.auth.security;
+package com.business.security;
 
 import java.io.IOException;
 import java.sql.Date;

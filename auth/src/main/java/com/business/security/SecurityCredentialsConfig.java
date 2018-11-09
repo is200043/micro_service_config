@@ -1,4 +1,4 @@
-package com.business.auth.security;
+package com.business.security;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.business.auth.user;
+package com.business.promotion;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,7 +11,8 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author chonlakornpunphopthaworn
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface PromotionRespository extends CrudRepository<Promotion, Long> {
+    
+    Promotion findByCode(String code);
 
-    User findByEmail(String email);
 }
